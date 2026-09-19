@@ -31,7 +31,8 @@
     dt { color:var(--muted); }
     dd { margin:0; }
     .notice { margin:18px 0 0; }
-    .booking-button { display:inline-block; margin-top:10px; border:1px solid var(--ink); background:var(--paper); color:var(--ink); padding:10px 14px; cursor:pointer; text-decoration:none; }
+    .appointment-actions { display:flex; flex-wrap:wrap; gap:12px; align-items:center; margin-top:20px; }
+    .appointment-action { display:inline-block; border:1px solid var(--ink); background:var(--paper); color:var(--ink); padding:10px 14px; cursor:pointer; text-decoration:none; }
     .modal { position:fixed; inset:0; display:none; place-items:center; padding:20px; background:rgba(17,42,59,.55); z-index:20; }
     .modal.open { display:grid; }
     .dialog { width:min(470px,100%); background:var(--paper); color:var(--ink); padding:28px; }
@@ -50,6 +51,8 @@
       main { margin:10px auto 24px; padding:30px 16px 40px; }
       .row { grid-template-columns:1fr; gap:0; padding:9px 0; }
       dt { margin-bottom:1px; }
+      .appointment-actions { align-items:stretch; }
+      .appointment-action { width:100%; text-align:center; }
     }
   </style>
 </head>
@@ -74,10 +77,12 @@
     <section aria-labelledby="appointments-en appointments-zh">
       <h2 id="appointments-en" data-en>Appointments</h2>
       <h2 id="appointments-zh" data-zh>預約診症</h2>
-      <p data-en>Appointments may be made by telephone. Walk-in registration is also available.</p>
-      <p data-zh>病人可致電診所預約，亦可即場登記。</p>
-      <p><a href="tel:+85228855681"><span data-en>Telephone: +852 2885 5681</span><span data-zh>電話：+852 2885 5681</span></a></p>
-      <button class="booking-button" id="booking-button" type="button"><span data-en>Book an appointment</span><span data-zh>預約診症</span></button>
+      <p data-en>To arrange an appointment, please call the clinic. Walk-in registration is also available.</p>
+      <p data-zh>如需預約，請致電診所。診所亦接受即場登記。</p>
+      <div class="appointment-actions">
+        <a class="appointment-action" href="tel:+85228855681"><span data-en>Call +852 2885 5681</span><span data-zh>致電 +852 2885 5681</span></a>
+        <button class="appointment-action" id="booking-button" type="button"><span data-en>Online booking — coming soon</span><span data-zh>網上預約 — 即將推出</span></button>
+      </div>
     </section>
 
     <section aria-labelledby="hours-en hours-zh">
@@ -118,10 +123,10 @@
 
   <div class="modal" id="booking-modal" role="dialog" aria-modal="true" aria-labelledby="booking-modal-title-en booking-modal-title-zh">
     <div class="dialog">
-      <h2 id="booking-modal-title-en" data-en>Book an appointment</h2>
-      <h2 id="booking-modal-title-zh" data-zh>預約診症</h2>
-      <p data-en>Online booking is being prepared. For now, please telephone the clinic and the clinic staff will help arrange your appointment.</p>
-      <p data-zh>網上預約服務正在籌備中。現時請致電診所，由診所職員協助安排預約。</p>
+      <h2 id="booking-modal-title-en" data-en>Online booking</h2>
+      <h2 id="booking-modal-title-zh" data-zh>網上預約</h2>
+      <p data-en>Online booking is not yet available. Please call the clinic and the clinic staff will arrange your appointment.</p>
+      <p data-zh>網上預約服務尚未啟用。請致電診所，由診所職員協助安排預約。</p>
       <div class="dialog-actions">
         <a href="tel:+85228855681"><span data-en>Call +852 2885 5681</span><span data-zh>致電 +852 2885 5681</span></a>
         <button class="close-button" id="close-button" type="button"><span data-en>Close</span><span data-zh>關閉</span></button>

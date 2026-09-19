@@ -31,6 +31,13 @@
     dt { color:var(--muted); }
     dd { margin:0; }
     .notice { margin:18px 0 0; }
+    .booking-button { display:inline-block; margin-top:10px; border:1px solid var(--ink); background:var(--paper); color:var(--ink); padding:10px 14px; cursor:pointer; text-decoration:none; }
+    .modal { position:fixed; inset:0; display:none; place-items:center; padding:20px; background:rgba(17,42,59,.55); z-index:20; }
+    .modal.open { display:grid; }
+    .dialog { width:min(470px,100%); background:var(--paper); color:var(--ink); padding:28px; }
+    .dialog h2 { margin-top:0; }
+    .dialog-actions { display:flex; flex-wrap:wrap; gap:18px; align-items:center; margin-top:22px; }
+    .close-button { border:0; background:transparent; color:var(--ink); padding:8px 0; text-decoration:underline; text-underline-offset:3px; cursor:pointer; }
     footer { padding:0 0 32px; color:var(--muted); font-size:.9rem; }
     .footer-inner { display:flex; justify-content:space-between; gap:18px; flex-wrap:wrap; }
     [data-zh] { display:none; }
@@ -70,6 +77,7 @@
       <p data-en>Appointments may be made by telephone. Walk-in registration is also available.</p>
       <p data-zh>病人可致電診所預約，亦可即場登記。</p>
       <p><a href="tel:+85228855681"><span data-en>Telephone: +852 2885 5681</span><span data-zh>電話：+852 2885 5681</span></a></p>
+      <button class="booking-button" id="booking-button" type="button"><span data-en>Book an appointment</span><span data-zh>預約診症</span></button>
     </section>
 
     <section aria-labelledby="hours-en hours-zh">
@@ -108,14 +116,41 @@
     </div>
   </footer>
 
+  <div class="modal" id="booking-modal" role="dialog" aria-modal="true" aria-labelledby="booking-modal-title-en booking-modal-title-zh">
+    <div class="dialog">
+      <h2 id="booking-modal-title-en" data-en>Book an appointment</h2>
+      <h2 id="booking-modal-title-zh" data-zh>預約診症</h2>
+      <p data-en>Online booking is being prepared. For now, please telephone the clinic and the clinic staff will help arrange your appointment.</p>
+      <p data-zh>網上預約服務正在籌備中。現時請致電診所，由診所職員協助安排預約。</p>
+      <div class="dialog-actions">
+        <a href="tel:+85228855681"><span data-en>Call +852 2885 5681</span><span data-zh>致電 +852 2885 5681</span></a>
+        <button class="close-button" id="close-button" type="button"><span data-en>Close</span><span data-zh>關閉</span></button>
+      </div>
+    </div>
+  </div>
+
   <script>
     const body = document.body;
     const language = document.getElementById('language');
+    const bookingModal = document.getElementById('booking-modal');
+    const bookingButton = document.getElementById('booking-button');
+    const closeButton = document.getElementById('close-button');
     language.addEventListener('click', () => {
       body.classList.toggle('zh');
       const chinese = body.classList.contains('zh');
       language.textContent = chinese ? 'English' : '繁體中文';
       document.documentElement.lang = chinese ? 'zh-Hant' : 'en';
+    });
+    bookingButton.addEventListener('click', () => {
+      bookingModal.classList.add('open');
+      closeButton.focus();
+    });
+    closeButton.addEventListener('click', () => bookingModal.classList.remove('open'));
+    bookingModal.addEventListener('click', event => {
+      if (event.target === bookingModal) bookingModal.classList.remove('open');
+    });
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape') bookingModal.classList.remove('open');
     });
     document.getElementById('year').textContent = new Date().getFullYear();
   </script>
